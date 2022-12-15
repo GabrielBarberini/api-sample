@@ -1,7 +1,7 @@
-#Starting the server
+# Starting the server
 - `uvicorn api:app --reload`
 
-#Testing
+# Testing
 
 ```
 curl --location --request POST 'http://127.0.0.1:8000/env/' \
@@ -12,7 +12,7 @@ curl --location --request POST 'http://127.0.0.1:8000/env/' \
 }'
 ```
 
-#DOCS
+# DOCS
 - OpenAPI standard: `http://127.0.0.1:8000/redoc`
 - Swagger UI: `http://127.0.0.1:8000/docs`
 
