@@ -1,4 +1,5 @@
 # RocketPy RookieAPI
+Simple fastAPI app that retrieves rocket simulation summary as JSON.
 
 ## Starting the server
 - `uvicorn api:app --reload`

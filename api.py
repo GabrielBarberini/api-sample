@@ -6,8 +6,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import datetime
 from rocket_simulation import Calisto
+from templates import flight_summary 
 
-class Env(BaseModel, Environment):
+class Env(BaseModel):
     railLength: Optional[float] = 5.2
     latitude: float 
     longitude: float
@@ -16,16 +17,17 @@ class Env(BaseModel, Environment):
 
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"message": "RocketPy Sample API"}
-
 # Environment
 @app.post("/env/")
 async def create_env(env: Env):
-    #Env.setAtmosphericModel(type='StandardAtmosphere', file='GFS')
-    env_dict = env.dict()
-    #TestFlight = Flight(rocket=Calisto, environment=Env, inclination=85, heading=0)
-    #TestFlight.info()
-    #TestFlight.allInfo()
-    return env_dict 
+    env = Environment(
+            railLength=env.railLength,
+            latitude=env.latitude,
+            longitude=env.longitude,
+            elevation=env.elevation,
+            date=env.date
+    )
+    env.setAtmosphericModel(type='StandardAtmosphere', file='GFS')
+    TestFlight = Flight(rocket=Calisto, environment=env, inclination=85, heading=0)
+    summary = flight_summary(TestFlight) 
+    return summary
